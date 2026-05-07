@@ -1,0 +1,62 @@
+-- NHẬT MOD (FIXED & PROTECTED)
+local s = game.HttpGet
+local load = loadstring
+local function decode(h) 
+    local r = "" 
+    for i = 1, #h, 2 do r = r .. string.char(tonumber(h:sub(i, i+1), 16)) end 
+    local success, result = pcall(function() return s(game, r) end)
+    return success and result or ""
+end
+
+local WindUI = load(s(game, "https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+local Window = WindUI:CreateWindow({Title = "Nhat mod", Author = "by . nhat", OpenButton = {Title = "nhathub", Enabled = true, Draggable = true}})
+
+-- Tạo Tab
+local T = {
+    M = Window:Tab({Title = "Main", Icon = "bird"}),
+    BF = Window:Tab({Title = "Blox Fruits", Icon = "swords"}),
+    MS = Window:Tab({Title = "Meme Sea", Icon = "skull"}),
+    ST = Window:Tab({Title = "Sát thủ", Icon = "user-secret"}),
+    BB = Window:Tab({Title = "Blade Ball", Icon = "target"}),
+    TH = Window:Tab({Title = "Tổng hợp", Icon = "layout-grid"}),
+    H = Window:Tab({Title = "Hop", Icon = "refresh-cw"})
+}
+
+-- Hàm tạo nút nhanh (Bảo mật link)
+local function add(tab, name, hex_link)
+    tab:Button({Title = name, Callback = function() 
+        local code = decode(hex_link)
+        if code ~= "" then load(code)() end
+    end})
+end
+
+-- --- NỘI DUNG ---
+
+-- Main
+T.M:Button({Title = "fly v3 x", Callback = function() load(s(game, "https://rawscripts.net/raw/Universal-Script-Fly-V3-X-132770"))() end})
+T.M:Button({Title = "cụt chân, đầu", Callback = function() 
+    local p = game.Players.LocalPlayer
+    local function mod(c)
+        local h = c:WaitForChild("Head", 5)
+        if h then h.Transparency = 1; if h:FindFirstChild("face") then h.face.Transparency = 1 end end
+        for _, v in pairs({"RightFoot","RightLowerLeg","RightUpperLeg","Right Leg"}) do
+            local o = c:FindFirstChild(v) if o then o.Transparency = 1 end
+        end
+    end
+    if p.Character then mod(p.Character) end
+    p.CharacterAdded:Connect(mod)
+end})
+
+-- Blox Fruits (Ví dụ các Hub quan trọng)
+add(T.BF, "Nak hub v4", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F4E616B48756242462F726566732F68656164732F6D61696E2F4E616B48756256342E6C7561")
+add(T.BF, "Banana TV", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F6F626969796575656D6D6D2F767468616E6773696974696E6B2F726566732F68656164732F6D61696E2F42616E616E614875625469656E67566965742E6C7561")
+
+-- Meme Sea
+add(T.MS, "redz", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F746C7265647A2F536372697074732F726566732F68656164732F6D61696E2F6D61696E2E6C756175")
+
+-- Sát Thủ
+add(T.ST, "sát thủ vn", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F776169646169746F2F53696C656E742D417373617373696E2D2F6D61696E2F73696C656E742D617373617373696E")
+
+-- Tổng hợp & Hop
+add(T.TH, "67 hub", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F36374875624465762F616C6C2F726566732F68656164732F6D61696E2F36376875622E766E2E6C7561")
+T.H:Button({Title = "Rejoin", Callback = function() game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer) end})
