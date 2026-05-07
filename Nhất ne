@@ -1,62 +1,134 @@
--- NHẬT MOD (FIXED & PROTECTED)
-local s = game.HttpGet
-local load = loadstring
-local function decode(h) 
-    local r = "" 
-    for i = 1, #h, 2 do r = r .. string.char(tonumber(h:sub(i, i+1), 16)) end 
-    local success, result = pcall(function() return s(game, r) end)
-    return success and result or ""
-end
+-- ==========================================
+-- PHẦN LOADING ANIMATION
+-- ==========================================
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size = UDim2.new(0, 260, 0, 100)
+MainFrame.Position = UDim2.new(0.5, -130, 0.5, -50)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 15)
 
-local WindUI = load(s(game, "https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
-local Window = WindUI:CreateWindow({Title = "Nhat mod", Author = "by . nhat", OpenButton = {Title = "nhathub", Enabled = true, Draggable = true}})
+local Title = Instance.new("TextLabel", MainFrame)
+Title.Size = UDim2.new(1, 0, 0, 50)
+Title.Text = "\78\104\97\116\32\77\111\100\32\76\111\97\100\105\110\103"
+Title.TextColor3 = Color3.fromHex("FF0F7B")
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 20
+Title.BackgroundTransparency = 1
 
--- Tạo Tab
-local T = {
-    M = Window:Tab({Title = "Main", Icon = "bird"}),
-    BF = Window:Tab({Title = "Blox Fruits", Icon = "swords"}),
-    MS = Window:Tab({Title = "Meme Sea", Icon = "skull"}),
-    ST = Window:Tab({Title = "Sát thủ", Icon = "user-secret"}),
-    BB = Window:Tab({Title = "Blade Ball", Icon = "target"}),
-    TH = Window:Tab({Title = "Tổng hợp", Icon = "layout-grid"}),
-    H = Window:Tab({Title = "Hop", Icon = "refresh-cw"})
-}
+local BarBack = Instance.new("Frame", MainFrame)
+BarBack.Size = UDim2.new(0, 200, 0, 10)
+BarBack.Position = UDim2.new(0.5, -100, 0.7, 0)
+BarBack.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+Instance.new("UICorner", BarBack)
 
--- Hàm tạo nút nhanh (Bảo mật link)
-local function add(tab, name, hex_link)
-    tab:Button({Title = name, Callback = function() 
-        local code = decode(hex_link)
-        if code ~= "" then load(code)() end
-    end})
-end
+local BarFill = Instance.new("Frame", BarBack)
+BarFill.Size = UDim2.new(0, 0, 1, 0)
+BarFill.BackgroundColor3 = Color3.fromHex("F89B29")
+Instance.new("UICorner", BarFill)
 
--- --- NỘI DUNG ---
+BarFill:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Linear", 2)
+task.wait(2.2)
+ScreenGui:Destroy()
 
--- Main
-T.M:Button({Title = "fly v3 x", Callback = function() load(s(game, "https://rawscripts.net/raw/Universal-Script-Fly-V3-X-132770"))() end})
-T.M:Button({Title = "cụt chân, đầu", Callback = function() 
-    local p = game.Players.LocalPlayer
-    local function mod(c)
-        local h = c:WaitForChild("Head", 5)
-        if h then h.Transparency = 1; if h:FindFirstChild("face") then h.face.Transparency = 1 end end
-        for _, v in pairs({"RightFoot","RightLowerLeg","RightUpperLeg","Right Leg"}) do
-            local o = c:FindFirstChild(v) if o then o.Transparency = 1 end
-        end
+-- ==========================================
+-- GIỮ NGUYÊN 100% LOGIC CŨ (MÃ HÓA BẢO MẬT)
+-- ==========================================
+local WindUI = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\103\105\116\104\117\98\46\99\111\109\47\70\111\111\116\97\103\101\115\117\115\47\87\105\110\100\85\73\47\114\101\108\101\97\115\101\115\47\108\97\116\101\115\116\47\100\111\119\110\108\111\97\100\47\109\97\105\110\46\108\117\97"))()
+local Window = WindUI:CreateWindow({
+    Title = "\78\104\97\116\32\109\111\100",
+    Icon = "", 
+    Author = "\98\121\32\46\32\110\104\97\116", 
+    OpenButton = {
+        Title = "\110\104\97\116\104\117\98",
+        Icon = "monitor",
+        CornerRadius = UDim.new(0,16),
+        StrokeThickness = 2,
+        Color = ColorSequence.new(Color3.fromHex("FF0F7B"), Color3.fromHex("F89B29")),
+        OnlyMobile = false,
+        Enabled = true,
+        Draggable = true,
+    }
+}) 
+
+local Tab = Window:Tab({Title = "Main", Icon = "bird", Locked = false})
+local TabBlox = Window:Tab({Title = "Blox Fruits", Icon = "swords", Locked = false})
+local TabMeme = Window:Tab({Title = "Meme Sea", Icon = "skull", Locked = false})
+local TabSatThu = Window:Tab({Title = "Sát thủ", Icon = "user-secret", Locked = false})
+local TabBlade = Window:Tab({Title = "Blade Ball", Icon = "target", Locked = false})
+local TabTongHop = Window:Tab({Title = "Tổng hợp", Icon = "layout-grid", Locked = false})
+local TabHop = Window:Tab({Title = "Hop", Icon = "refresh-cw", Locked = false})
+
+Tab:Select()
+
+-- TAB MAIN
+local SectionMain = Tab:Section({Title = "Player Mods", TextSize = 18})
+SectionMain:Button({
+    Title = "fly v3 x",
+    Callback = function()
+        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\115\99\114\105\112\116\115\46\110\101\116\47\114\97\119\47\85\110\105\118\101\114\115\97\108\45\83\99\114\105\112\116\45\70\108\121\45\86\51\45\88\45\49\51\50\55\55\48"))()
     end
-    if p.Character then mod(p.Character) end
-    p.CharacterAdded:Connect(mod)
-end})
+})
+SectionMain:Button({
+    Title = "cụt chân, đầu",
+    Callback = function()
+        local player = game.Players.LocalPlayer
+        local function showNotification()
+            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Hệ thống Mod", Text = "Nhật Mod: Đã kích hoạt cụt chân phải & đầu!", Duration = 5})
+        end
+        local function applyMod(character)
+            local head = character:WaitForChild("Head", 5)
+            if head then head.Transparency = 1 if head:FindFirstChild("face") then head.face.Transparency = 1 end end
+            local rightLegParts = {"RightFoot", "RightLowerLeg", "RightUpperLeg", "Right Leg"}
+            for _, partName in pairs(rightLegParts) do
+                local part = character:FindFirstChild(partName)
+                if part and part:IsA("BasePart") then part.Transparency = 1 end
+            end
+        end
+        if player.Character then showNotification() applyMod(player.Character) end
+        player.CharacterAdded:Connect(function(character) task.wait(0.5) showNotification() applyMod(character) end)
+    end
+})
 
--- Blox Fruits (Ví dụ các Hub quan trọng)
-add(T.BF, "Nak hub v4", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F4E616B48756242462F726566732F68656164732F6D61696E2F4E616B48756256342E6C7561")
-add(T.BF, "Banana TV", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F6F626969796575656D6D6D2F767468616E6773696974696E6B2F726566732F68656164732F6D61696E2F42616E616E614875625469656E67566965742E6C7561")
+-- TAB SÁT THỦ
+local SectionSatThu = TabSatThu:Section({Title = "Silent Assassin Scripts", TextSize = 18})
+SectionSatThu:Button({
+    Title = "sát thủ vn",
+    Callback = function()
+        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\119\97\105\100\97\105\116\111\47\83\105\108\101\110\116\45\65\115\115\97\115\115\105\110\45\47\109\97\105\110\47\115\105\108\101\110\116\45\97\115\115\105\110"))()
+    end
+})
 
--- Meme Sea
-add(T.MS, "redz", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F746C7265647A2F536372697074732F726566732F68656164732F6D61696E2F6D61696E2E6C756175")
+-- TAB MEME SEA
+local SectionMeme = TabMeme:Section({Title = "Scripts", TextSize = 18})
+SectionMeme:Button({
+    Title = "redz",
+    Callback = function()
+        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\116\108\114\101\100\122\47\83\99\114\105\112\116\115\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\109\97\105\110\46\108\117\97\117"))(Settings)
+    end
+})
 
--- Sát Thủ
-add(T.ST, "sát thủ vn", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F776169646169746F2F53696C656E742D417373617373696E2D2F6D61696E2F73696C656E742D617373617373696E")
+-- TAB BLOX FRUITS
+local SectionBlox = TabBlox:Section({Title = "Scripts", TextSize = 18})
+SectionBlox:Button({Title = "Nak hub v4", Callback = function() getgenv().Team = "Marines" loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))() end})
+SectionBlox:Button({Title = "Banana hub(by longhihihi)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/BananaHub/refs/heads/main/CombackVersion"))() end})
+SectionBlox:Button({Title = "Banana tiếng Việt", Callback = function() getgenv().Key = "916301d173c9193f0a" loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHubTiengViet.lua"))() end})
+SectionBlox:Button({Title = "Quantum", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))() end})
+SectionBlox:Button({Title = "Gravityhub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))() end})
+SectionBlox:Button({Title = "redz(by longhihihi)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/RedzHub/refs/heads/main/RedzHubv1.txt"))() end})
+SectionBlox:Button({Title = "teddy", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub.lua"))() end})
+SectionBlox:Button({Title = "dragonhub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))() end})
 
--- Tổng hợp & Hop
-add(T.TH, "67 hub", "68747470733A2F2F7261772E67697468756275736572636F6E74656E742E636F6D2F36374875624465762F616C6C2F726566732F68656164732F6D61696E2F36376875622E766E2E6C7561")
-T.H:Button({Title = "Rejoin", Callback = function() game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer) end})
+-- TAB BLADE BALL
+local SectionBlade = TabBlade:Section({Title = "Scripts", TextSize = 18})
+SectionBlade:Button({Title = "Bobit free", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/BobitFree-BladeBall/BobitFree/refs/heads/main/BobitFree"))() end})
+
+-- TAB TỔNG HỢP
+local SectionTongHop = TabTongHop:Section({Title = "Tất cả Script", TextSize = 18})
+SectionTongHop:Button({Title = "67 hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/67HubDev/all/refs/heads/main/67hub.vn.lua"))() end})
+SectionTongHop:Button({Title = "longhihihi", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/ScriptTongHop-/refs/heads/main/MainTongHop.lua"))() end})
+
+-- TAB HOP
+local SectionHop = TabHop:Section({Title = "Server Hop", TextSize = 18})
+SectionHop:Button({Title = "Rejoin Server", Callback = function() game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer) end})
+SectionHop:Button({Title = "night hop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau"))() end})
