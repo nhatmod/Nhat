@@ -1,134 +1,308 @@
--- ==========================================
--- PHẦN LOADING ANIMATION
--- ==========================================
-local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
-local MainFrame = Instance.new("Frame", ScreenGui)
-MainFrame.Size = UDim2.new(0, 260, 0, 100)
-MainFrame.Position = UDim2.new(0.5, -130, 0.5, -50)
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 15)
-
-local Title = Instance.new("TextLabel", MainFrame)
-Title.Size = UDim2.new(1, 0, 0, 50)
-Title.Text = "\78\104\97\116\32\77\111\100\32\76\111\97\100\105\110\103"
-Title.TextColor3 = Color3.fromHex("FF0F7B")
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 20
-Title.BackgroundTransparency = 1
-
-local BarBack = Instance.new("Frame", MainFrame)
-BarBack.Size = UDim2.new(0, 200, 0, 10)
-BarBack.Position = UDim2.new(0.5, -100, 0.7, 0)
-BarBack.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-Instance.new("UICorner", BarBack)
-
-local BarFill = Instance.new("Frame", BarBack)
-BarFill.Size = UDim2.new(0, 0, 1, 0)
-BarFill.BackgroundColor3 = Color3.fromHex("F89B29")
-Instance.new("UICorner", BarFill)
-
-BarFill:TweenSize(UDim2.new(1, 0, 1, 0), "Out", "Linear", 2)
-task.wait(2.2)
-ScreenGui:Destroy()
-
--- ==========================================
--- GIỮ NGUYÊN 100% LOGIC CŨ (MÃ HÓA BẢO MẬT)
--- ==========================================
-local WindUI = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\103\105\116\104\117\98\46\99\111\109\47\70\111\111\116\97\103\101\115\117\115\47\87\105\110\100\85\73\47\114\101\108\101\97\115\101\115\47\108\97\116\101\115\116\47\100\111\119\110\108\111\97\100\47\109\97\105\110\46\108\117\97"))()
+local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 local Window = WindUI:CreateWindow({
-    Title = "\78\104\97\116\32\109\111\100",
-    Icon = "", 
-    Author = "\98\121\32\46\32\110\104\97\116", 
+    Title = "Nhat mod",
+    Icon = "", -- lucide icon. optional
+    Author = "by . nhat", -- optional
+    
     OpenButton = {
-        Title = "\110\104\97\116\104\117\98",
+        Title = "nhathub",
         Icon = "monitor",
         CornerRadius = UDim.new(0,16),
         StrokeThickness = 2,
-        Color = ColorSequence.new(Color3.fromHex("FF0F7B"), Color3.fromHex("F89B29")),
+        Color = ColorSequence.new( -- gradient
+            Color3.fromHex("FF0F7B"), 
+            Color3.fromHex("F89B29")
+        ),
         OnlyMobile = false,
         Enabled = true,
         Draggable = true,
     }
 }) 
 
-local Tab = Window:Tab({Title = "Main", Icon = "bird", Locked = false})
-local TabBlox = Window:Tab({Title = "Blox Fruits", Icon = "swords", Locked = false})
-local TabMeme = Window:Tab({Title = "Meme Sea", Icon = "skull", Locked = false})
-local TabSatThu = Window:Tab({Title = "Sát thủ", Icon = "user-secret", Locked = false})
-local TabBlade = Window:Tab({Title = "Blade Ball", Icon = "target", Locked = false})
-local TabTongHop = Window:Tab({Title = "Tổng hợp", Icon = "layout-grid", Locked = false})
-local TabHop = Window:Tab({Title = "Hop", Icon = "refresh-cw", Locked = false})
+-- Tab chính (Main)
+local Tab = Window:Tab({
+    Title = "Main",
+    Icon = "bird",
+    Locked = false,
+})
 
-Tab:Select()
+-- Tab Blox Fruits
+local TabBlox = Window:Tab({
+    Title = "Blox Fruits",
+    Icon = "swords",
+    Locked = false,
+})
 
--- TAB MAIN
-local SectionMain = Tab:Section({Title = "Player Mods", TextSize = 18})
+-- Tab Meme Sea
+local TabMeme = Window:Tab({
+    Title = "Meme Sea",
+    Icon = "skull",
+    Locked = false,
+})
+
+-- Tab Sát thủ
+local TabSatThu = Window:Tab({
+    Title = "Sát thủ",
+    Icon = "user-secret",
+    Locked = false,
+})
+
+-- Tab Blade Ball
+local TabBlade = Window:Tab({
+    Title = "Blade Ball",
+    Icon = "target",
+    Locked = false,
+})
+
+-- Tab Tổng hợp
+local TabTongHop = Window:Tab({
+    Title = "Tổng hợp",
+    Icon = "layout-grid",
+    Locked = false,
+})
+
+-- Tab Hop
+local TabHop = Window:Tab({
+    Title = "Hop",
+    Icon = "refresh-cw",
+    Locked = false,
+})
+
+Tab:Select() -- Mặc định chọn Tab Main
+
+-- Nội dung cho Tab Main
+local SectionMain = Tab:Section({
+    Title = "Player Mods",
+    TextSize = 18,
+})
+
 SectionMain:Button({
     Title = "fly v3 x",
     Callback = function()
-        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\115\99\114\105\112\116\115\46\110\101\116\47\114\97\119\47\85\110\105\118\101\114\115\97\108\45\83\99\114\105\112\116\45\70\108\121\45\86\51\45\88\45\49\51\50\55\55\48"))()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fly-V3-X-132770"))()
     end
 })
+
 SectionMain:Button({
     Title = "cụt chân, đầu",
     Callback = function()
         local player = game.Players.LocalPlayer
         local function showNotification()
-            game:GetService("StarterGui"):SetCore("SendNotification", {Title = "Hệ thống Mod", Text = "Nhật Mod: Đã kích hoạt cụt chân phải & đầu!", Duration = 5})
+            game:GetService("StarterGui"):SetCore("SendNotification", {
+                Title = "Hệ thống Mod";
+                Text = "Nhật Mod: Đã kích hoạt cụt chân phải & đầu!";
+                Duration = 5;
+            })
         end
         local function applyMod(character)
             local head = character:WaitForChild("Head", 5)
-            if head then head.Transparency = 1 if head:FindFirstChild("face") then head.face.Transparency = 1 end end
-            local rightLegParts = {"RightFoot", "RightLowerLeg", "RightUpperLeg", "Right Leg"}
+            if head then
+                head.Transparency = 1
+                if head:FindFirstChild("face") then
+                    head.face.Transparency = 1
+                end
+            end
+            local rightLegParts = {
+                "RightFoot", "RightLowerLeg", "RightUpperLeg",
+                "Right Leg"
+            }
             for _, partName in pairs(rightLegParts) do
                 local part = character:FindFirstChild(partName)
-                if part and part:IsA("BasePart") then part.Transparency = 1 end
+                if part and part:IsA("BasePart") then
+                    part.Transparency = 1
+                end
             end
         end
-        if player.Character then showNotification() applyMod(player.Character) end
-        player.CharacterAdded:Connect(function(character) task.wait(0.5) showNotification() applyMod(character) end)
+        if player.Character then
+            showNotification()
+            applyMod(player.Character)
+        end
+        player.CharacterAdded:Connect(function(character)
+            task.wait(0.5)
+            showNotification()
+            applyMod(character)
+        end)
     end
 })
 
--- TAB SÁT THỦ
-local SectionSatThu = TabSatThu:Section({Title = "Silent Assassin Scripts", TextSize = 18})
+-- Nội dung cho Tab Sát thủ
+local SectionSatThu = TabSatThu:Section({
+    Title = "Silent Assassin Scripts",
+    TextSize = 18,
+})
+
+-- Thêm sát thủ vn vào Tab Sát thủ
 SectionSatThu:Button({
     Title = "sát thủ vn",
     Callback = function()
-        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\119\97\105\100\97\105\116\111\47\83\105\108\101\110\116\45\65\115\115\97\115\115\105\110\45\47\109\97\105\110\47\115\105\108\101\110\116\45\97\115\115\105\110"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/waidaito/Silent-Assassin-/main/silent-assassin"))()
     end
 })
 
--- TAB MEME SEA
-local SectionMeme = TabMeme:Section({Title = "Scripts", TextSize = 18})
+-- Nội dung cho Tab Meme Sea
+local SectionMeme = TabMeme:Section({
+    Title = "Scripts",
+    TextSize = 18,
+})
+
 SectionMeme:Button({
     Title = "redz",
     Callback = function()
-        loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\116\108\114\101\100\122\47\83\99\114\105\112\116\115\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\109\97\105\110\46\108\117\97\117"))(Settings)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))(Settings)
     end
 })
 
--- TAB BLOX FRUITS
-local SectionBlox = TabBlox:Section({Title = "Scripts", TextSize = 18})
-SectionBlox:Button({Title = "Nak hub v4", Callback = function() getgenv().Team = "Marines" loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))() end})
-SectionBlox:Button({Title = "Banana hub(by longhihihi)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/BananaHub/refs/heads/main/CombackVersion"))() end})
-SectionBlox:Button({Title = "Banana tiếng Việt", Callback = function() getgenv().Key = "916301d173c9193f0a" loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHubTiengViet.lua"))() end})
-SectionBlox:Button({Title = "Quantum", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))() end})
-SectionBlox:Button({Title = "Gravityhub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))() end})
-SectionBlox:Button({Title = "redz(by longhihihi)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/RedzHub/refs/heads/main/RedzHubv1.txt"))() end})
-SectionBlox:Button({Title = "teddy", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub.lua"))() end})
-SectionBlox:Button({Title = "dragonhub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))() end})
+-- Nội dung cho Tab Blox Fruits
+local SectionBlox = TabBlox:Section({
+    Title = "Scripts",
+    TextSize = 18,
+})
 
--- TAB BLADE BALL
-local SectionBlade = TabBlade:Section({Title = "Scripts", TextSize = 18})
-SectionBlade:Button({Title = "Bobit free", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/BobitFree-BladeBall/BobitFree/refs/heads/main/BobitFree"))() end})
+SectionBlox:Button({
+    Title = "Nak hub v4",
+    Callback = function()
+        getgenv().Team = "Marines" 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))()
+    end
+})
 
--- TAB TỔNG HỢP
-local SectionTongHop = TabTongHop:Section({Title = "Tất cả Script", TextSize = 18})
-SectionTongHop:Button({Title = "67 hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/67HubDev/all/refs/heads/main/67hub.vn.lua"))() end})
-SectionTongHop:Button({Title = "longhihihi", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/ScriptTongHop-/refs/heads/main/MainTongHop.lua"))() end})
+SectionBlox:Button({
+    Title = "Banana hub(by longhihihi)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/BananaHub/refs/heads/main/CombackVersion"))()
+    end
+})
 
--- TAB HOP
-local SectionHop = TabHop:Section({Title = "Server Hop", TextSize = 18})
-SectionHop:Button({Title = "Rejoin Server", Callback = function() game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer) end})
-SectionHop:Button({Title = "night hop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau"))() end})
+SectionBlox:Button({
+    Title = "Banana tiếng Việt",
+    Callback = function()
+        repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+        getgenv().Key = "916301d173c9193f0a" 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHubTiengViet.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "Banana Hub Giống real 98,99%",
+    Callback = function()
+        repeat wait() until game:IsLoaded() and game.Players.LocalPlayer 
+        getgenv().Key = "XyZpQrStUvWxYzAbCdEfGhIjKl" 
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHub.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "Quantum",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "Gravityhub",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "redz(by longhihihi)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/RedzHub/refs/heads/main/RedzHubv1.txt"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "banana(fake)",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/aloaloalo322/sssdas/refs/heads/main/cc"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "omg",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "up cyborg",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/mizuharasup/free/refs/heads/main/cy.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "teddy",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "redz",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/huy384/redzHub/refs/heads/main/redzHub.lua"))()
+    end
+})
+
+SectionBlox:Button({
+    Title = "dragonhub",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))()
+    end
+})
+
+-- Nội dung cho Tab Blade Ball
+local SectionBlade = TabBlade:Section({
+    Title = "Scripts",
+    TextSize = 18,
+})
+
+SectionBlade:Button({
+    Title = "Bobit free",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/BobitFree-BladeBall/BobitFree/refs/heads/main/BobitFree"))()
+    end
+})
+
+-- Nội dung cho Tab Tổng hợp
+local SectionTongHop = TabTongHop:Section({
+    Title = "Tất cả Script",
+    TextSize = 18,
+})
+
+SectionTongHop:Button({
+    Title = "67 hub",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/67HubDev/all/refs/heads/main/67hub.vn.lua"))()
+    end
+})
+
+SectionTongHop:Button({
+    Title = "longhihihi",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/ScriptTongHop-/refs/heads/main/MainTongHop.lua"))()
+    end
+})
+
+-- Nội dung cho Tab Hop
+local SectionHop = TabHop:Section({
+    Title = "Server Hop",
+    TextSize = 18,
+})
+
+SectionHop:Button({
+    Title = "Rejoin Server",
+    Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+    end
+})
+
+SectionHop:Button({
+    Title = "night hop",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau"))()
+    end
+})
