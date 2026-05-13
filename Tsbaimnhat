@@ -1,0 +1,206 @@
+--[[ 
+    SCRIPT: tsb-aim nhatmod (FIXED DASH DISAPPEAR)
+    KEY: nhatmodredz
+]]
+
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local TextChatService = game:GetService("TextChatService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+local ScreenGui = Instance.new("ScreenGui", CoreGui)
+ScreenGui.Name = "NhatMod_Elite_Final"
+ScreenGui.ResetOnSpawn = false
+
+-- ==========================================
+-- HÀM KÉO THẢ
+-- ==========================================
+local function MakeDraggable(obj)
+    local dragging, dragInput, dragStart, startPos
+    obj.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = obj.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then dragging = false end
+            end)
+        end
+    end)
+    obj.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    RunService.RenderStepped:Connect(function()
+        if dragging and dragInput then
+            local delta = dragInput.Position - dragStart
+            obj.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+end
+
+-- ==========================================
+-- HỆ THỐNG KEY
+-- ==========================================
+local KeyFrame = Instance.new("Frame", ScreenGui)
+KeyFrame.Size = UDim2.new(0, 250, 0, 150)
+KeyFrame.Position = UDim2.new(0.5, -125, 0.5, -75)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 10)
+local KeyStroke = Instance.new("UIStroke", KeyFrame)
+KeyStroke.Color = Color3.fromRGB(255, 0, 0)
+KeyStroke.Thickness = 2
+MakeDraggable(KeyFrame)
+
+local KeyInput = Instance.new("TextBox", KeyFrame)
+KeyInput.Size = UDim2.new(0.8, 0, 0.25, 0)
+KeyInput.Position = UDim2.new(0.1, 0, 0.35, 0)
+KeyInput.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+KeyInput.PlaceholderText = "Key: nhatmodredz"
+KeyInput.Text = ""
+KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", KeyInput)
+
+local SubmitBtn = Instance.new("TextButton", KeyFrame)
+SubmitBtn.Size = UDim2.new(0.8, 0, 0.25, 0)
+SubmitBtn.Position = UDim2.new(0.1, 0, 0.65, 0)
+SubmitBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+SubmitBtn.Text = "XÁC NHẬN"
+SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SubmitBtn.Font = Enum.Font.GothamBold
+Instance.new("UICorner", SubmitBtn)
+
+-- ==========================================
+-- LOGIC CHÍNH
+-- ==========================================
+local function StartScript()
+    KeyFrame:Destroy()
+
+    task.spawn(function()
+        local msg = "nhat mod đã kích hoạt"
+        if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+            pcall(function() TextChatService.TextChannels.RBXGeneral:SendAsync(msg) end)
+        else
+            pcall(function() ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(msg, "All") end)
+        end
+    end)
+
+    local AimActive = true
+    local MenuOpen = true
+    
+    local ToggleBtn = Instance.new("ImageButton", ScreenGui)
+    ToggleBtn.Size = UDim2.new(0, 50, 0, 50)
+    ToggleBtn.Position = UDim2.new(0, 15, 0.5, -25)
+    ToggleBtn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+    ToggleBtn.Image = "rbxassetid://6031243717"
+    Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(1, 0)
+    local RainbowStroke = Instance.new("UIStroke", ToggleBtn)
+    RainbowStroke.Thickness = 3
+    task.spawn(function()
+        local h = 0 while true do RainbowStroke.Color = Color3.fromHSV(h, 1, 1) h = h + 0.01 task.wait(0.01) end
+    end)
+    MakeDraggable(ToggleBtn)
+
+    local MainFrame = Instance.new("Frame", ScreenGui)
+    MainFrame.Size = UDim2.new(0, 180, 0, 145)
+    MainFrame.Position = UDim2.new(0.5, -90, 0.1, 0)
+    MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+    Instance.new("UICorner", MainFrame)
+    local MainStroke = Instance.new("UIStroke", MainFrame)
+    MainStroke.Color = Color3.fromRGB(255, 0, 0)
+    MakeDraggable(MainFrame)
+
+    local Title = Instance.new("TextLabel", MainFrame)
+    Title.Text = "tsb-aim nhatmod"
+    Title.Size = UDim2.new(1, 0, 0.25, 0)
+    Title.TextColor3 = Color3.fromRGB(255, 0, 0)
+    Title.Font = Enum.Font.GothamBold
+    Title.BackgroundTransparency = 1
+
+    local function CreateBtn(name, pos, color)
+        local btn = Instance.new("TextButton", MainFrame)
+        btn.Size = UDim2.new(0.9, 0, 0.18, 0)
+        btn.Position = pos
+        btn.BackgroundColor3 = color
+        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        btn.Text = name
+        btn.Font = Enum.Font.Gotham
+        Instance.new("UICorner", btn)
+        return btn
+    end
+
+    local AimBtn = CreateBtn("Aim: ON", UDim2.new(0.05, 0, 0.25, 0), Color3.fromRGB(40, 40, 40))
+    local DashBtn = CreateBtn("Fake Dash: OFF", UDim2.new(0.05, 0, 0.48, 0), Color3.fromRGB(30, 30, 30))
+    local LagBtn = CreateBtn("Fix Lag: OFF", UDim2.new(0.05, 0, 0.71, 0), Color3.fromRGB(30, 30, 30))
+
+    ToggleBtn.MouseButton1Click:Connect(function()
+        MenuOpen = not MenuOpen
+        MainFrame.Visible = MenuOpen
+    end)
+
+    local AimHighlight = Instance.new("Highlight", CoreGui)
+    AimHighlight.FillColor = Color3.fromRGB(255, 0, 0)
+
+    RunService.RenderStepped:Connect(function()
+        if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then return end
+        local isShiftLock = (UserInputService.MouseBehavior == Enum.MouseBehavior.LockCenter)
+        if AimActive and not isShiftLock then
+            local closest, dist = nil, 600
+            for _, v in pairs(workspace:GetDescendants()) do
+                if v:IsA("Humanoid") and v.Parent ~= LocalPlayer.Character and v.Health > 0 then
+                    local hrp = v.Parent:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        local d = (hrp.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                        if d < dist then dist = d closest = hrp end
+                    end
+                end
+            end
+            if closest then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.lookAt(LocalPlayer.Character.HumanoidRootPart.Position, Vector3.new(closest.Position.X, LocalPlayer.Character.HumanoidRootPart.Position.Y, closest.Position.Z))
+                AimHighlight.Adornee = closest.Parent
+                AimBtn.Text = "Lock: "..closest.Parent.Name
+            else
+                AimHighlight.Adornee = nil
+            end
+        else
+            AimHighlight.Adornee = nil
+            AimBtn.Text = isShiftLock and "Paused (ShiftLock)" or "Aim: OFF"
+        end
+    end)
+
+    AimBtn.MouseButton1Click:Connect(function() AimActive = not AimActive end)
+    LagBtn.MouseButton1Click:Connect(function()
+        LagBtn.Text = "Fix Lag: ON"
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/marianscriptKing/SUPER-MAX.lau/main/SUPER%20MAX%20PERFORMANCE"))()
+    end)
+
+    -- FIX LỖI DASH: Không xóa ScreenGui, chỉ ẩn các Frame thừa
+    DashBtn.MouseButton1Click:Connect(function()
+        DashBtn.Text = "Dash: ACTIVE"
+        DashBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 200)
+        
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Cyborg883/FakeDash/refs/heads/main/Protected_5833389828844912.lua"))()
+        
+        task.spawn(function()
+            task.wait(0.5)
+            for _, v in pairs(CoreGui:GetChildren()) do
+                -- Chỉ tìm các UI lạ và ẩn các Frame bên trong thay vì xóa cả Gui
+                if v:IsA("ScreenGui") and v.Name ~= "NhatMod_Elite_Final" and v.Name ~= "NhatMod_Rainbow_Elite" then
+                    for _, child in pairs(v:GetChildren()) do
+                        if child:IsA("Frame") or child:IsA("ImageLabel") or child:IsA("ScrollingFrame") then
+                            child.Visible = false -- Ẩn đi để không vướng màn hình
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end
+
+SubmitBtn.MouseButton1Click:Connect(function()
+    if KeyInput.Text == "nhatmodredz" then StartScript() end
+end)
