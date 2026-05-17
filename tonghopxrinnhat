@@ -1,0 +1,428 @@
+local Fluent = loadstring(game:HttpGet(
+    "https://github.com/StyearX/Fluent-Modded/releases/download/Fluent/FluentLite"
+))()
+
+Fluent:RegisterCustomTheme("MyTheme", {
+    Accent              = Color3.fromRGB(255, 64, 64), 
+    AcrylicMain         = Color3.fromRGB(20, 20, 30),
+    AcrylicBorder       = Color3.fromRGB(70, 50, 50),
+    AcrylicGradient     = ColorSequence.new(Color3.fromRGB(20, 20, 30), Color3.fromRGB(10, 10, 20)),
+    AcrylicNoise        = 0.8,
+    TitleBarLine        = Color3.fromRGB(70, 50, 50),
+    Tab                 = Color3.fromRGB(35, 30, 30),
+    Element             = Color3.fromRGB(38, 25, 25),
+    ElementBorder       = Color3.fromRGB(70, 50, 50),
+    InElementBorder     = Color3.fromRGB(85, 60, 60),
+    ElementTransparency = 0.85,
+    ToggleSlider        = Color3.fromRGB(60, 40, 40),
+    ToggleToggled       = Color3.fromRGB(255, 64, 64),
+    SliderRail          = Color3.fromRGB(60, 40, 40),
+    DropdownFrame       = Color3.fromRGB(32, 20, 20),
+    DropdownHolder      = Color3.fromRGB(25, 15, 15),
+    DropdownBorder      = Color3.fromRGB(70, 50, 50),
+    DropdownOption      = Color3.fromRGB(42, 28, 28),
+    Keybind             = Color3.fromRGB(42, 28, 28),
+    Input               = Color3.fromRGB(28, 18, 18),
+    InputFocused        = Color3.fromRGB(20, 12, 12),
+    InputIndicator      = Color3.fromRGB(90, 60, 60),
+    InputIndicatorFocus = Color3.fromRGB(255, 64, 64),
+    Dialog              = Color3.fromRGB(25, 15, 15),
+    DialogHolder        = Color3.fromRGB(20, 12, 12),
+    DialogHolderLine    = Color3.fromRGB(60, 40, 40),
+    DialogButton        = Color3.fromRGB(35, 22, 22),
+    DialogButtonBorder  = Color3.fromRGB(70, 50, 50),
+    DialogBorder        = Color3.fromRGB(70, 50, 50),
+    DialogInput         = Color3.fromRGB(28, 18, 18),
+    DialogInputLine     = Color3.fromRGB(90, 60, 60),
+    Text                = Color3.fromRGB(255, 240, 240),
+    SubText             = Color3.fromRGB(175, 140, 140),
+    Hover               = Color3.fromRGB(55, 35, 35),
+    HoverChange         = 0.04,
+    ShineEnabled        = true,
+    StrokeShine         = false,
+    StrokeDark          = Color3.fromRGB(60, 40, 40),
+    IconColor           = Color3.fromRGB(255, 64, 64),
+    IconSize            = 18,
+    Background          = nil,
+    BackgroundTransparency = 0,
+    ThemeAccentColors   = { Color3.fromRGB(255, 64, 64) },
+})
+
+local Window = Fluent:CreateWindow({
+    Title            = "Rin x nhat mod",
+    SubTitle         = "dev : Rin x nhat",
+    TabWidth         = 139,
+    Size             = UDim2.fromOffset(480, 460),
+    Acrylic          = true,
+    Theme            = "AMOLED",
+    MinimizeKey      = Enum.KeyCode.LeftControl,
+    UserInfo         = true,
+    UserInfoTop      = false,
+    UserInfoTitle    = "",
+    UserInfoSubtitle = "",
+    UserInfoColor    = Color3.fromRGB(180, 10, 20),
+    Search           = true,
+})
+
+-- =========================================================================
+-- KHỞI TẠO TAB HỆ THỐNG
+-- =========================================================================
+local KeyTab = Window:AddTab({ Title = "Verify Key", Icon = "lock" })
+
+local MainTab, TabBlox, TabMeme, TabSatThu, TabBlade, TabEvade, TabMM2, TabTongHop, TabHop, SettingsTab
+
+-- =========================================================================
+-- HỆ THỐNG CHECK TIME & COOLDOWN
+-- =========================================================================
+local LocalPlayer = game:GetService("Players").LocalPlayer
+
+if getgenv().KeyUsedOnce == nil then
+    getgenv().KeyUsedOnce = false
+end
+
+local function StartKeyTimer()
+    task.spawn(function()
+        local duration = 3600
+        while duration > 0 do
+            task.wait(1)
+            duration = duration - 1
+        end
+        LocalPlayer:Kick("get key bro ,rinxnhat")
+    end)
+end
+
+-- =========================================================================
+-- GIAO DIỆN NHẬP KEY
+-- =========================================================================
+local KeySection = KeyTab:AddSection("Hệ Thống Xác Minh")
+
+local InputKey = ""
+KeySection:AddInput("InputKey", {
+    Title = "Nhập Key:",
+    Default = "",
+    Placeholder = "Nhập key rinxnhat để mở khoá...",
+    Numeric = false,
+    Finished = false,
+    Callback = function(Value)
+        InputKey = Value
+    end
+})
+
+KeySection:AddButton({
+    Title = "Kiểm Tra Key",
+    Callback = function()
+        if getgenv().KeyUsedOnce == true then
+            Fluent:Notify({
+                Title    = "Từ chối",
+                Content  = "Mỗi người chỉ được kích hoạt key rinxnhat 1 lần duy nhất!",
+                Duration = 5,
+            })
+            return
+        end
+
+        if InputKey == "rinxnhat" then
+            getgenv().KeyUsedOnce = true 
+            
+            Fluent:Notify({
+                Title    = "Thành công",
+                Content  = "Key chính xác! Bạn có 1 tiếng để trải nghiệm menu.",
+                Duration = 5,
+            })
+            
+            StartKeyTimer()
+
+            if MainTab then 
+                Window:SelectTab(2)
+                return 
+            end
+
+            MainTab     = Window:AddTab({ Title = "Main", Icon = "star" })
+            TabBlox     = Window:AddTab({ Title = "Blox Fruits", Icon = "shield" })
+            TabMeme     = Window:AddTab({ Title = "Meme Sea", Icon = "smile" })
+            TabSatThu   = Window:AddTab({ Title = "Sát thủ", Icon = "user" })
+            TabBlade    = Window:AddTab({ Title = "Blade Ball", Icon = "target" })
+            TabEvade    = Window:AddTab({ Title = "Evade", Icon = "zap" })
+            TabMM2      = Window:AddTab({ Title = "MM2", Icon = "alert-triangle" })
+            TabTongHop  = Window:AddTab({ Title = "Tổng hợp", Icon = "settings" })
+            TabHop      = Window:AddTab({ Title = "Hop", Icon = "refresh-cw" })
+            SettingsTab = Window:AddTab({ Title = "Settings", Icon = "sliders" })
+
+            -- NẠP CHỨC NĂNG VÀO CÁC TAB VỪA TẠO
+            -- 1. Main
+            local MainSection = MainTab:AddSection("Player Mods")
+            MainSection:AddButton({Title = "fly v3 x", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Fly-V3-X-132770"))() end})
+            MainSection:AddButton({Title = "cụt chân, đầu", Callback = function() local player = game.Players.LocalPlayer local function showNotification() Fluent:Notify({Title = "Hệ thống Mod", Content = "Nhật Mod: Đã kích hoạt cụt chân phải & đầu!", Duration = 5}) end local function applyMod(character) local head = character:WaitForChild("Head", 5) if head then head.Transparency = 1 if head:FindFirstChild("face") then head.face.Transparency = 1 end end local rightLegParts = {"RightFoot", "RightLowerLeg", "RightUpperLeg", "Right Leg"} for _, partName in pairs(rightLegParts) do local part = character:FindFirstChild(partName) if part and part:IsA("BasePart") then part.Transparency = 1 end end end if player.Character then showNotification() applyMod(player.Character) end player.CharacterAdded:Connect(function(character) task.wait(0.5) showNotification() applyMod(character) end) end})
+            
+            -- 2. Blox Fruits
+            local BloxSection = TabBlox:AddSection("Scripts")
+            BloxSection:AddButton({Title = "Nak hub v4", Callback = function() getgenv().Team = "Marines"; loadstring(game:HttpGet("https://raw.githubusercontent.com/Naknohack/NakHubBF/refs/heads/main/NakHubV4.lua"))() end})
+            BloxSection:AddButton({Title = "Banana hub(by longhihihi)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/BananaHub/refs/heads/main/CombackVersion"))() end})
+            BloxSection:AddButton({Title = "Banana tiếng Việt", Callback = function() getgenv().Key = "916301d173c9193f0a"; loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHubTiengViet.lua"))() end})
+            BloxSection:AddButton({Title = "Banana Hub Real", Callback = function() getgenv().Key = "XyZpQrStUvWxYzAbCdEfGhIjKl"; loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuemmm/vthangsiitink/refs/heads/main/BananaHub.lua"))() end})
+            BloxSection:AddButton({Title = "Quantum", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/flazhy/QuantumOnyx/refs/heads/main/QuantumOnyx.lua"))() end})
+            BloxSection:AddButton({Title = "Gravityhub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua"))() end})
+            BloxSection:AddButton({Title = "redz (longhihihi)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/RedzHub/refs/heads/main/RedzHubv1.txt"))() end})
+            BloxSection:AddButton({Title = "banana (fake)", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/aloaloalo322/sssdas/refs/heads/main/cc"))() end})
+            BloxSection:AddButton({Title = "omg", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))() end})
+            BloxSection:AddButton({Title = "up cyborg", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/mizuharasup/free/refs/heads/main/cy.lua"))() end})
+            BloxSection:AddButton({Title = "teddy", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub.lua"))() end})
+            BloxSection:AddButton({Title = "redz", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/huy384/redzHub/refs/heads/main/redzHub.lua"))() end})
+            BloxSection:AddButton({Title = "dragonhub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/dragonhubdev/dragonwitheveryone/refs/heads/main/Main-BF.lua"))() end})
+
+            -- 3. Meme Sea
+            local MemeSection = TabMeme:AddSection("Scripts")
+            MemeSection:AddButton({Title = "redz", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Scripts/refs/heads/main/main.luau"))(Settings) end})
+
+            -- 4. Sát thủ
+            local SatThuSection = TabSatThu:AddSection("Silent Assassin Scripts")
+            SatThuSection:AddButton({Title = "sát thủ vn", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/waidaito/Silent-Assassin-/main/silent-assassin"))() end})
+
+            -- 5. Blade Ball
+            local BladeSection = TabBlade:AddSection("Scripts")
+            BladeSection:AddButton({Title = "Bobit free", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/BobitFree-BladeBall/BobitFree/refs/heads/main/BobitFree"))() end})
+
+            -- 6. Evade
+            local EvadeSection = TabEvade:AddSection("Evade Scripts")
+            EvadeSection:AddButton({Title = "Misery Hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/I6S-S/Misery/main/Evade"))() end})
+
+            -- 7. MM2
+            local MM2Section = TabMM2:AddSection("MM2 Scripts")
+            MM2Section:AddButton({Title = "Vortox Hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/VortoxHub/VortoxHub/main/MM2"))() end})
+            MM2Section:AddButton({Title = "EXODUS", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/script-9209/roblox/refs/heads/main/mm2-keyless-auto"))() end})
+
+            -- 8. Tổng hợp
+            local TongHopSection = TabTongHop:AddSection("Tất cả Script")
+            TongHopSection:AddButton({Title = "67 hub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/67HubDev/all/refs/heads/main/67hub.vn.lua"))() end})
+            TongHopSection:AddButton({Title = "longhihihi", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/longhihilonghihi-hub/ScriptTongHop-/refs/heads/main/MainTongHop.lua"))() end})
+
+            -- 9. Hop
+            local HopSection = TabHop:AddSection("Server Hop")
+            HopSection:AddButton({Title = "Rejoin Server", Callback = function() game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer) end})
+            HopSection:AddButton({Title = "night hop", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/WhiteX1208/Scripts/refs/heads/main/HopScript.luau"))() end})
+
+            local SaveManager = Fluent.SaveManager or loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/main/Addons/SaveManager.lua"))()
+            local InterfaceManager = Fluent.InterfaceManager or loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/main/Addons/InterfaceManager.lua"))()
+            
+            SaveManager:SetLibrary(Fluent)
+            InterfaceManager:SetLibrary(Fluent)
+            InterfaceManager:SetFolder("Rinxnhatmod")
+            SaveManager:SetFolder("Rinxnhatmod/Config")
+            InterfaceManager:BuildInterfaceSection(SettingsTab)
+            SaveManager:BuildConfigSection(SettingsTab)
+            SaveManager:IgnoreThemeSettings()
+            SaveManager:LoadAutoloadConfig()
+
+            Window:SelectTab(2)
+        else
+            Fluent:Notify({
+                Title    = "Thất bại",
+                Content  = "Key không chính xác, vui lòng thử lại!",
+                Duration = 4,
+            })
+        end
+    end
+})
+
+KeySection:AddButton({
+    Title = "Copy Key Free 1h",
+    Callback = function()
+        setclipboard("rinxnhat")
+        Fluent:Notify({
+            Title    = "Hệ Thống",
+            Content  = "Đã tự động sao chép key 'rinxnhat' vào bộ nhớ tạm!",
+            Duration = 3,
+        })
+    end
+})
+
+KeySection:AddButton({
+    Title = "Get Key (Copy Link)",
+    Callback = function()
+        setclipboard("https://link-get-key-cua-ban.com")
+        Fluent:Notify({
+            Title    = "Hệ Thống",
+            Content  = "Đã sao chép liên kết lấy key vào bộ nhớ tạm!",
+            Duration = 3,
+        })
+    end
+})
+
+-- =========================================================================
+-- ĐOẠN ĐÃ SỬA: CHECK CẢ DISPLAYNAME (TÊN HIỂN THỊ) VÀ USERNAME
+-- =========================================================================
+if LocalPlayer.DisplayName == "rin_xnhat" or LocalPlayer.Name == "nhatnecanacc" then
+    KeySection:AddButton({
+        Title = "Dev Reset Cooldown (Chỉ dành cho bạn)",
+        Callback = function()
+            getgenv().KeyUsedOnce = false
+            Fluent:Notify({
+                Title    = "Developer",
+                Content  = "Đã giải phóng bộ nhớ tạm thời! Giờ bạn có thể nhập lại key thoải mái.",
+                Duration = 3,
+            })
+        end
+    })
+end
+
+Window:SelectTab(1)
+
+-- =========================================================================
+-- HỆ THỐNG OPENUI GỐC
+-- =========================================================================
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local toggleGui = Instance.new("ScreenGui")
+toggleGui.Name = "OpenUi"
+toggleGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+toggleGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+toggleGui.ResetOnSpawn = false
+
+local mainBtn = Instance.new("TextButton")
+mainBtn.Name = "OpenButton"
+mainBtn.Parent = toggleGui
+mainBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+mainBtn.BackgroundTransparency = 1
+mainBtn.Position = UDim2.new(0.101969875, 0, 0.110441767, 0)
+mainBtn.Size = UDim2.new(0, 64, 0, 42)
+mainBtn.Text = ""
+mainBtn.Visible = true
+Instance.new("UICorner", mainBtn)
+
+local SizeBackMulti = 0.3
+
+local backgroundImage = Instance.new("ImageLabel")
+backgroundImage.Name = "RotatingBackground"
+backgroundImage.Parent = mainBtn
+backgroundImage.Size = UDim2.new(1.5 + SizeBackMulti, 0, 1.5 + SizeBackMulti, 0)
+backgroundImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+backgroundImage.AnchorPoint = Vector2.new(0.5, 0.5)
+backgroundImage.BackgroundTransparency = 1
+backgroundImage.Image = "rbxassetid://92062295706713"
+backgroundImage.SizeConstraint = Enum.SizeConstraint.RelativeXX
+backgroundImage.ZIndex = 0
+
+local frontImage = Instance.new("ImageLabel")
+frontImage.Name = "StaticIcon"
+frontImage.Parent = mainBtn
+frontImage.Size = UDim2.fromOffset(55, 55)
+frontImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+frontImage.AnchorPoint = Vector2.new(0.5, 0.5)
+frontImage.BackgroundTransparency = 1
+frontImage.Image = "rbxassetid://126113649238951"
+frontImage.ZIndex = 1
+Instance.new("UICorner", frontImage).CornerRadius = UDim.new(0.2, 0)
+
+local rotation = 0
+local rotSpeed = 90
+local lastTime = os.clock()
+
+local rotationConnection
+rotationConnection = RunService.RenderStepped:Connect(function()
+    if not backgroundImage or not backgroundImage.Parent then
+        rotationConnection:Disconnect()
+        return
+    end
+    local now = os.clock()
+    local delta = now - lastTime
+    lastTime = now
+    rotation = (rotation + rotSpeed * delta) % 360
+    backgroundImage.Rotation = rotation
+end)
+
+local function MakeDraggable(topbar, obj, locked)
+    local dragging, dragInput, dragStart, startPos = false, nil, nil, nil
+    local holding, holdTime, moveCancelThreshold = false, 1.0, 6
+    local holdToken = 0
+
+    obj:SetAttribute("Locked", locked or false)
+
+    local function Update(input)
+        if obj:GetAttribute("Locked") then return end
+        local delta = input.Position - dragStart
+        obj.Position = UDim2.new(
+            startPos.X.Scale, startPos.X.Offset + delta.X,
+            startPos.Y.Scale, startPos.Y.Offset + delta.Y
+        )
+    end
+
+    local function ToggleLock()
+        local newState = not obj:GetAttribute("Locked")
+        obj:SetAttribute("Locked", newState)
+        Fluent:Notify({
+            Title = newState and "Button Locked" or "Button Unlocked",
+            Content = newState and "This button is now locked in place." or "This button can now be moved.",
+            Duration = 2,
+        })
+    end
+
+    topbar.InputBegan:Connect(function(input)
+        if input.UserInputType ~= Enum.UserInputType.MouseButton1
+        and input.UserInputType ~= Enum.UserInputType.Touch then return end
+        dragging = not obj:GetAttribute("Locked")
+        holding = true
+        dragStart = input.Position
+        startPos = obj.Position
+        holdToken += 1
+        local token = holdToken
+        task.delay(holdTime, function()
+            if holding and token == holdToken then ToggleLock() end
+        end)
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                holding = false
+            end
+        end)
+    end)
+
+    topbar.InputChanged:Connect(function(input)
+        if not dragStart then return end
+        if input.UserInputType == Enum.UserInputType.MouseMovement
+        or input.UserInputType == Enum.UserInputType.Touch then
+            if (input.Position - dragStart).Magnitude > moveCancelThreshold then
+                holding = false
+            end
+            dragInput = input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then Update(input) end
+    end)
+end
+
+MakeDraggable(mainBtn, mainBtn, false)
+
+local function playSound(soundId)
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://" .. soundId
+    sound.Parent = game:GetService("SoundService")
+    sound:Play()
+    sound.Ended:Connect(function() sound:Destroy() end)
+end
+
+mainBtn.MouseButton1Click:Connect(function()
+    local sounds = { "7127123605", "137566474343039", "438666542" }
+    playSound(sounds[math.random(#sounds)])
+    
+    if Window then
+        Window:Minimize()
+    end
+
+    local function smoothSpeed(target, dur)
+        local start = rotSpeed
+        local steps = 30
+        for i = 1, steps do
+            rotSpeed = start + (target - start) * (i / steps)
+            task.wait(dur / steps)
+        end
+        rotSpeed = target
+    end
+
+    smoothSpeed(360, 0.4)
+    task.wait(0.5)
+    smoothSpeed(180, 0.4)
+    task.wait(0.3)
+    smoothSpeed(90, 0.4)
+end)
